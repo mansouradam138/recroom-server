@@ -9,9 +9,9 @@ def catch_all(path):
     print(f"[REC ROOM TRAFFIC] Method: {request.method} | Path: /{path} | Query: {request.args}")
     return jsonify({
         "api": "https://your-service-name.onrender.com",
-        "accounts": "https://your-service-name.onrender.com",
-        "match": "https://your-service-name.onrender.com",
-        "image": "https://your-service-name.onrender.com",
+        "accounts": "https://recroom-server-dg8n.onrender.com",
+        "match": "https://recroom-server-dg8n.onrender.com",
+        "image": "https://recroom-server-dg8n.onrender.com",
         "status": "online"
     })
 
