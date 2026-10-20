@@ -4,12 +4,13 @@ import os
 
 class RecRoomHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
-        print(f"[GET Request] {self.path}")
+        # This print statement prints to your Render logs instantly:
+        print(f"[GET Request] Someone visited path: {self.path}", flush=True)
+        
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.end_headers()
         
-        # Automatically grab your Render public URL
         render_url = os.environ.get("RENDER_EXTERNAL_URL", "http://localhost")
         
         response = {
@@ -21,7 +22,9 @@ class RecRoomHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(json.dumps(response).encode('utf-8'))
 
     def do_POST(self):
-        print(f"[POST Request] {self.path}")
+        # This print statement handles incoming login/game requests:
+        print(f"[POST Request] Game sent data to: {self.path}", flush=True)
+        
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.end_headers()
@@ -33,16 +36,11 @@ class RecRoomHandler(http.server.BaseHTTPRequestHandler):
         }
         self.wfile.write(json.dumps(response).encode('utf-8'))
 
-    def log_message(self, format, *args):
-        return
-
 if __name__ == '__main__':
-    # Render assigns a dynamic port via environment variables
     port = int(os.environ.get('PORT', 10000))
-    
-    # Must bind to 0.0.0.0 so Render can detect the port publicly
     server_address = ('0.0.0.0', port)
     httpd = http.server.HTTPServer(server_address, RecRoomHandler)
     
-    print(f"Rec Room Cloud Backend active on port {port}")
+    # Print statement confirming the server is online:
+    print(f"Rec Room Cloud Backend active on port {port}", flush=True)
     httpd.serve_forever()
