@@ -36,7 +36,14 @@ class RecRoomHandler(http.server.BaseHTTPRequestHandler):
         }
         self.wfile.write(json.dumps(response).encode('utf-8'))
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    import ssl
+    # This runs your server locally on port 80 (HTTP) or port 443 (HTTPS)
+    # forcing Windows to route ns.rec.net straight to your script.
+    try:
+        app.run(host="0.0.0.0", port=80, debug=True)
+    except PermissionError:
+        print("\n[!] ERROR: You must run Terminal / Command Prompt as Administrator to use Port 80/443!\n")
     port = int(os.environ.get('PORT', 10000))
     server_address = ('0.0.0.0', port)
     httpd = http.server.HTTPServer(server_address, RecRoomHandler)
